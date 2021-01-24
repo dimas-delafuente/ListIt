@@ -1,0 +1,4 @@
+<p>Total lists: {{totalLists}}</p>
+<div *ngFor="let listItem of listCollection" class="mt-2">
+    <app-list-item [listItem]="listItem"></app-list-item>
+</div>
