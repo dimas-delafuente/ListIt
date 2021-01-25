@@ -1,0 +1,13 @@
+{
+  "appId": "com.mylists.app",
+  "appName": "MyLists",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "dist/MyListsApp",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  },
+  "cordova": {}
+}
