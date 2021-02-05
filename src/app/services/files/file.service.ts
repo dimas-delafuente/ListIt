@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Plugins, FilesystemDirectory, FilesystemEncoding } from '@capacitor/core';
+import { Plugins, FilesystemDirectory, FilesystemEncoding, DeviceInfo } from '@capacitor/core';
 const { Filesystem } = Plugins;
 
 
@@ -8,15 +8,23 @@ const { Filesystem } = Plugins;
   })
 export class FileService {
 
-    // private fs = require('fs');
+    private ANDROID_DEVICE = 'android';
+    private IOS_DEVICE = 'android';
 
     public async readFile(): Promise<any> {
+        const deviceInfo = await this.getDeviceInfo();
+
+        if (true)
+            return new Promise((resolve, reject) => {
+                resolve("[{\"code\": 0,\"name\": \"Movies\",\"description\": \"Recommended\"}, {\"code\": 1,\"name\": \"Series\",\"description\": \"Mis series\"}, {\"code\": 1,\"name\": \"Series\",\"description\": \"Mis series\"}]");
+            });
+        const directory = deviceInfo.platform === this.ANDROID_DEVICE ? FilesystemDirectory.Data : FilesystemDirectory.Documents;
+
         return await Filesystem.readFile({
             path: 'storage/my-lists.json',
-            directory: FilesystemDirectory.Data,
+            directory: directory,
             encoding: FilesystemEncoding.UTF8
         }).catch(async (error) => {
-            // alert("ERROR READ" + error);
             await this.writeFile();
         });
     }
@@ -29,5 +37,9 @@ export class FileService {
             encoding: FilesystemEncoding.UTF8,
             recursive: true
         }).catch(error => alert("WRITE ERROR " + error));
+    }
+
+    private async getDeviceInfo(): Promise<DeviceInfo> {
+        return await Plugins.Device.getInfo();
     }
 }

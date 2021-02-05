@@ -1,9 +1,9 @@
 {
-  "appId": "com.mylists.app",
-  "appName": "MyLists",
+  "appId": "com.listit.app",
+  "appName": "ListIt",
   "bundledWebRuntime": false,
   "npmClient": "npm",
-  "webDir": "dist/MyListsApp",
+  "webDir": "dist/ListIt",
   "plugins": {
     "SplashScreen": {
       "launchShowDuration": 0

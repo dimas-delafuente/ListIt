@@ -1,14 +1,6 @@
-<mat-card class="example-card">
+<mat-card class="card">
     <mat-card-header>
-      <mat-card-title>{{listItem?.name}}</mat-card-title>
+      <mat-card-title class="title">{{listItem?.name}}</mat-card-title>
+      <mat-card-subtitle>{{listItem?.description}}</mat-card-subtitle>
     </mat-card-header>
-    <mat-card-content>
-      <p>
-        {{listItem?.description}}
-      </p>
-    </mat-card-content>
-    <!-- <mat-card-actions>
-      <button mat-button>LIKE</button>
-      <button mat-button>SHARE</button>
-    </mat-card-actions> -->
 </mat-card>

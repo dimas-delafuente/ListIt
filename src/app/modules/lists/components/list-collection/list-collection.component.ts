@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import { Store } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { ListService } from './../../../../services/lists/list.service';
 import { State } from '././../../../../state/stateDefinition';
 import { selectLists } from './../../../../state/lists/selectors';
@@ -13,7 +14,7 @@ import { ListActionTypes } from 'src/app/state/lists/actions';
   styleUrls: ['./list-collection.component.less']
 })
 export class ListCollectionComponent implements OnInit, OnDestroy {
-  public listCollection: Array<List> | undefined;
+  public listCollection!: List[];
   public totalLists = 0;
 
   private subscriptions: Subscription[] = [];
@@ -29,6 +30,13 @@ export class ListCollectionComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(s => s.unsubscribe());
+  }
+
+  drop(event: CdkDragDrop<List[]>) {
+    let arrayForSort = [...this.listCollection];
+    moveItemInArray(arrayForSort, event.previousIndex, event.currentIndex);
+
+    this.listCollection = arrayForSort;
   }
 
   private subscribeToStateChange(): void {

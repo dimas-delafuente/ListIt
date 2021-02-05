@@ -22,7 +22,7 @@ export class ListsEffects {
             tap(() => console.log("LOADING")),
             exhaustMap(() => this.listService.getAll()),
             map(lists => loadSuccess({ lists })),
-            tap((lists) => alert(lists)),
+            tap((lists) => console.log("LOADED")),
             catchError(() => {
                 console.log("LOADED ERROR");
                 return of({ type: ListActionTypes.LOAD_ERROR});

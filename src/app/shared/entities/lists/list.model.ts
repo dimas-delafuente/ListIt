@@ -1,7 +1,8 @@
 export class List {
     constructor(
-        public id: number,
+        public code: number,
         public name: string,
-        public description: string
+        public description: string,
+        public items: any[]
     ) {}
 }

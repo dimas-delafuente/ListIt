@@ -10,6 +10,8 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatListModule} from '@angular/material/list';
 import {MatCardModule} from '@angular/material/card';
+import {MatMenuModule} from '@angular/material/menu';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 // Components
 import { AppShellComponent } from './components/app-shell/app-shell.component';
@@ -28,7 +30,9 @@ import { SidenavListComponent } from './components/sidenav-list/sidenav-list.com
       MatIconModule,
       MatButtonModule,
       MatListModule,
-      MatCardModule
+      MatCardModule,
+      MatMenuModule,
+      DragDropModule
     ],
     exports: [
       CommonModule,
@@ -38,6 +42,8 @@ import { SidenavListComponent } from './components/sidenav-list/sidenav-list.com
       MatButtonModule,
       MatListModule,
       MatCardModule,
+      MatMenuModule,
+      DragDropModule,
       AppShellComponent,
       SidenavListComponent
     ],
