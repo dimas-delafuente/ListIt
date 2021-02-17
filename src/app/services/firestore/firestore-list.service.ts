@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AngularFirestore, QuerySnapshot } from '@angular/fire/firestore';
+import { AngularFirestore, DocumentChangeAction, DocumentReference, QuerySnapshot } from '@angular/fire/firestore';
 import { List } from './../../shared/entities/lists/list.model';
 
 @Injectable({
@@ -11,7 +11,11 @@ export class FirestoreList {
 
     }
 
-    getAll(): Observable<QuerySnapshot<List>> {
-        return this.firestore.collection<List>('lists').get();
+    getAll(): Observable<DocumentChangeAction<List>[]> {
+        return this.firestore.collection<List>('lists').snapshotChanges();
+    }
+
+    create(list: List): Promise<DocumentReference<List>> {
+      return this.firestore.collection<List>('lists').add(list);
     }
 }

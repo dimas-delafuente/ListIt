@@ -4,7 +4,7 @@ export function LOAD(state: List[]): List[] {
   return [...state];
 }
 
-export function LOAD_SUCCESS(_state: List[],  action: { lists: List[] } ): List[] {
+export function LOAD_SUCCESS(state: List[],  action: { lists: List[] } ): List[] {
   return [...action.lists];
 }
 

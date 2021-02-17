@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { List } from './../../../../shared/entities/lists/list.model';
 
 @Component({
@@ -7,11 +8,17 @@ import { List } from './../../../../shared/entities/lists/list.model';
   styleUrls: ['./list-item.component.less']
 })
 export class ListItemComponent implements OnInit {
-  @Input() listItem: List | undefined;
+  @Input() listItem!: List;
 
-  constructor() { }
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+  ) { }
 
   ngOnInit(): void {
   }
 
+  public openListDetails(): void {
+    this.router.navigate([this.listItem.id], { relativeTo: this.route });
+  }
 }

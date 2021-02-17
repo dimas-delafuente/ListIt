@@ -1,12 +1,13 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { ListService } from './../../../../services/lists/list.service';
+import { MatDialog } from '@angular/material/dialog';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import { NewListDialogComponent } from '../new-list-dialog/new-list-dialog.component';
 import { State } from '././../../../../state/stateDefinition';
 import { selectLists } from './../../../../state/lists/selectors';
+import { ListActionTypes } from './../../../../state/lists/actions';
 import { List } from './../../../../shared/entities/lists/list.model';
-import { ListActionTypes } from 'src/app/state/lists/actions';
 
 @Component({
   selector: 'app-list-collection',
@@ -21,7 +22,7 @@ export class ListCollectionComponent implements OnInit, OnDestroy {
 
 
   constructor(private store: Store<State>,
-              private listService: ListService) { }
+              private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.getListCollection();
@@ -32,8 +33,21 @@ export class ListCollectionComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(s => s.unsubscribe());
   }
 
-  drop(event: CdkDragDrop<List[]>) {
-    let arrayForSort = [...this.listCollection];
+  public openNewListDialog(): void {
+    const dialogRef = this.dialog.open(NewListDialogComponent, {
+      width: '250px',
+      data: {}
+    });
+
+    dialogRef.afterClosed().subscribe(newList => {
+      if (newList) {
+        this.dispatchCreateListAction(newList);
+      }
+    });
+  }
+
+  public drop(event: CdkDragDrop<List[]>): void {
+    const arrayForSort = [...this.listCollection];
     moveItemInArray(arrayForSort, event.previousIndex, event.currentIndex);
 
     this.listCollection = arrayForSort;
@@ -48,17 +62,18 @@ export class ListCollectionComponent implements OnInit, OnDestroy {
 
   private getListCollection(): void {
     this.dispatchStoreLoadActions();
-    // this.subscriptions.push(
-    //   this.listService.getAll().subscribe(listCollection => {
-    //     this.listCollection = listCollection;
-    //     this.dispatchStoreLoadActions(listCollection);
-    //   })
-    // );
   }
 
   private dispatchStoreLoadActions(): void {
     this.store.dispatch({
       type: ListActionTypes.LOAD
+    });
+  }
+
+  private dispatchCreateListAction(list: List): void {
+    this.store.dispatch({
+      type: ListActionTypes.CREATE,
+      payload: { list }
     });
   }
 

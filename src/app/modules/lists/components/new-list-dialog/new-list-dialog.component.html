@@ -1,0 +1,20 @@
+<h1 mat-dialog-title>New List</h1>
+<div mat-dialog-content>
+    <form class="example-form" #addListForm="ngForm">
+        <mat-form-field class="example-full-width">
+            <mat-label>List name</mat-label>
+            <input name="listName" matInput placeholder="Ex. Movies, Beers" [(ngModel)]="list.name"
+                required>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+            <mat-label>Description</mat-label>
+            <textarea name="listDescription" matInput placeholder="" [(ngModel)]="list.description"></textarea>
+        </mat-form-field>
+    </form>
+</div>
+<div mat-dialog-actions>
+    <button mat-button [mat-dialog-close]="" type="button">Cancel</button>
+    <button mat-raised-button color="primary" [mat-dialog-close]="list" type="submit"
+        [disabled]="!addListForm.form.valid">Create</button>
+</div>
